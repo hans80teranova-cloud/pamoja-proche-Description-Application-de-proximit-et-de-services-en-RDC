@@ -1,1 +1,99 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#5636c9">
+<title>Pamoja Proche</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f3fb;color:#25213b}
+header{background:#5636c9;color:white;padding:25px 18px;border-radius:0 0 22px 22px}
+header h1{margin:0 0 8px}
+main{padding:18px;max-width:600px;margin:auto}
+input,textarea,select{width:100%;padding:13px;margin:8px 0;border:1px solid #ddd;border-radius:10px;font-size:16px}
+button{background:#5636c9;color:white;border:0;border-radius:10px;padding:12px;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.category,.ad,.form{background:white;padding:15px;border-radius:14px;margin-bottom:12px}
+.category{text-align:center;font-weight:bold}
+.muted{color:#777;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+<h1>📍 Pamoja Proche</h1>
+<p>Découvre les services et les annonces autour de toi.</p>
+</header>
+<main>
+<input id="search" placeholder="Rechercher une annonce...">
+<h2>Explorer</h2>
+<div class="grid">
+<div class="category">🛠️ Services</div>
+<div class="category">🛍️ Commerce</div>
+<div class="category">💼 Emploi</div>
+<div class="category">🏠 Logement</div>
+</div>
+<h2>Annonces</h2>
+<p class="muted">Voici comment les annonces apparaîtront.</p>
+<div id="ads">
+<div class="ad">
+<h3>🔧 Réparation à domicile</h3>
+<p>Exemple de service proposé dans le quartier.</p>
+</div>
+<div class="ad">
+<h3>📚 Soutien scolaire</h3>
+<p>Exemple de cours de soutien pour élèves.</p>
+</div>
+</div>
+<div class="form">
+<h2>Publier une annonce</h2>
+<form id="form">
+<input id="title" placeholder="Titre de l'annonce" required>
+<select id="categorySelect" required>
+<option value="">Choisir une catégorie</option>
+<option>Services</option>
+<option>Commerce</option>
+<option>Emploi</option>
+<option>Logement</option>
+<option>Autre</option>
+</select>
+<textarea id="description" placeholder="Description de l'annonce" required></textarea>
+<button type="submit">Publier</button>
+</form>
+<p id="message" class="muted"></p>
+</div>
+</main>
+<script>
+const form=document.getElementById('form');
+const ads=document.getElementById('ads');
+form.addEventListener('submit',function(e){
+e.preventDefault();
+const title=document.getElementById('title').value.trim();
+const category=document.getElementById('categorySelect').value;
+const description=document.getElementById('description').value.trim();
+if(!title||!category||!description)return;
+const card=document.createElement('div');
+card.className='ad';
+const heading=document.createElement('h3');
+heading.textContent=title;
+const detail=document.createElement('p');
+detail.textContent=description;
+const type=document.createElement('p');
+type.className='muted';
+type.textContent='Catégorie : '+category;
+card.append(heading,detail,type);
+ads.prepend(card);
+form.reset();
+document.getElementById('message').textContent='Annonce ajoutée à cette démonstration.';
+});
+document.getElementById('search').addEventListener('input',function(){
+const query=this.value.toLowerCase();
+ads.querySelectorAll('.ad').forEach(function(ad){
+ad.style.display=ad.textContent.toLowerCase().includes(query)?'block':'none';
+});
+});
+</script>
+</body>
+  </html>
+
